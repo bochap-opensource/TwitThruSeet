@@ -32,7 +32,7 @@ app.use(express.session({ secret: 'keyboard cat' }));
 // persistent login sessions (recommended).
 app.use(Passport.initialize());
 app.use(Passport.session())
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'webclient')));
 app.use(app.router);
 
 

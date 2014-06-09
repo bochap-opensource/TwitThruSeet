@@ -16,7 +16,7 @@ module.exports = function (app, passport) {
 //   the user to twitter.com.  After authorization, the Twitter will redirect
 //   the user back to this application at /auth/twitter/callback
     app.get('/auth/twitter',
-        function() { console.log('sign in to twitter'); passport.authenticate('twitter'); }
+        passport.authenticate('twitter')
     );
 
 // GET /auth/twitter/callback
