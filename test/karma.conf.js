@@ -19,8 +19,9 @@ module.exports = function(config) {
         {pattern: 'webclient/lib/angular/angular-mocks.js', watched: false},
         {pattern: 'webclient/lib/jquery/*.js', watched: false},
         {pattern: 'webclient/lib/bootstrap/js/*.js', watched: false},
+        {pattern: 'node_modules/ng-midway-tester/src/ngMidwayTester.js', watched: false},
         'webclient/**/*.js',
-        'test/spec/**/*.js'
+        'test/spec/**/*.spec.js'
     ],
 
 

@@ -27,8 +27,11 @@ module.exports = function (app, passport) {
         failureRedirect: '/'
     }));
 
-/*    // JSON API
-    app.get('/api/name', api.name);*/
+    // JSON API
+    app.get('/api/twitter/timeline', function (req, res) {
+        console.log(req);
+        res.end('');
+    });
 
     // =====================================
     // Loading partials for AngularJS

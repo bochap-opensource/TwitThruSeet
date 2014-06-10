@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-function AppCtrl($scope, $http) {
+/*function AppCtrl($scope, $http) {
   $http({method: 'GET', url: '/api/name'}).
   success(function(data, status, headers, config) {
     $scope.name = data.name;
@@ -10,15 +10,15 @@ function AppCtrl($scope, $http) {
   error(function(data, status, headers, config) {
     $scope.name = 'Error!'
   });
-}
+}*/
 
-function MyCtrl1() {
-    console.log();
-}
-MyCtrl1.$inject = [];
-
-
-function MyCtrl2() {
+function EmptyCtrl() {
 
 }
-MyCtrl2.$inject = [];
+EmptyCtrl.$inject = [];
+
+
+function TwitterCtrl() {
+
+}
+TwitterCtrl.$inject = [];

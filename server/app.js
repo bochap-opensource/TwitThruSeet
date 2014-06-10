@@ -3,8 +3,6 @@
  */
 
 var express = require('express'),
-    routes = require('./routes'),
-    api = require('./routes/api'),
     http = require('http'),
     path = require('path'),
     errorhandler = require('errorhandler'),
@@ -27,7 +25,7 @@ app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride('X-HTTP-Method-Override'));
 app.use(express.cookieParser());
-app.use(express.session({ secret: 'keyboard cat' }));
+app.use(express.session({secret: 'keyboard cat' }));
 // Initialize Passport!  Also use passport.session() middleware, to support
 // persistent login sessions (recommended).
 app.use(Passport.initialize());
