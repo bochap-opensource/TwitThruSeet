@@ -6,8 +6,6 @@ module.exports = function (app, passport) {
     // HOME PAGE SPA Start page ========
     // =====================================
     app.get('/', index);
-
-
     app.get('/partials/twitterService', isLoggedIn);
 
 // GET /auth/twitter
@@ -24,12 +22,10 @@ module.exports = function (app, passport) {
 //   request.  If authentication fails, the user will be redirected back to the
 //   login page.  Otherwise, the primary route function function will be called,
 //   which, in this example, will redirect the user to the home page.
-    app.get('/auth/twitter/callback',
-        passport.authenticate('twitter', {
-            successRedirect: '/twitterService',
-            failureRedirect: '/'
-        }));
-
+    app.get('/auth/twitter/callback', passport.authenticate('twitter', {
+        successRedirect: '/twitterService',
+        failureRedirect: '/'
+    }));
 
 /*    // JSON API
     app.get('/api/name', api.name);*/
@@ -63,7 +59,6 @@ module.exports = function (app, passport) {
     }
 
     function index(req, res) {
-        console.log(req.path);
         res.render('index');
     }
 }
