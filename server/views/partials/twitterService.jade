@@ -1,7 +1,17 @@
 .row
     .col-lg-12
         h1 {{ title }}
-        ul
-            li(ng-repeat="record in data")
-                h2 {{ record.user.screen_name }}
-                span {{ record.text }}
+        div(class=['.panel', '.panel-default'])
+            .panel-heading Latest tweets as of {{ last_refresh.toLocaleString() }} [Total: {{ data.result.length }} post(s)]
+            .panel-body
+                .btn-toolbar
+                    a(class=['btn btn-primary btn-md'], ng-click='{{loadTweets(null, data.since_id)}}') Get New Posts
+                    a(class=['btn btn-primary btn-md'], ng-click='{{loadTweets(data.max_id, null)}}') Get Older Posts
+            ul.list-group
+                li.list-group-item(ng-repeat="record in data.result")
+                    span.badge
+                        img.img-thumbnail(ng-src='{{ record.user_profile_image_url }}', alt='{{ record.user_name }}')
+                    h4.list-group-item-heading {{ record.user_screen_name }}
+                    p()
+                        small {{ record.created_at }}
+                    p.list-group-item-text {{ record.text }}
