@@ -12,4 +12,3 @@ angular.module('demoApiSeet', ['demoApiSeet.filters', 'demoApiSeet.services', 'd
             .otherwise({redirectTo: '/about'});
         $locationProvider.html5Mode(true);
   }]);
-//angular.module('demoApiSeet', ['demoApiSeet.filters', 'demoApiSeet.services', 'demoApiSeet.directives', 'demoApiSeet.interceptors','ngRoute']);

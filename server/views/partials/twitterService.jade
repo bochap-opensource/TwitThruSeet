@@ -1,6 +1,7 @@
 .row
-	.col-lg-12
-		p This is the partial for view 2.
-		p
-			| Showing of 'interpolate' filter:
-			| {{ 'Current version is v%VERSION%.' | interpolate }}
+    .col-lg-12
+        h1 {{ title }}
+        ul
+            li(ng-repeat="record in data")
+                h2 {{ record.user.screen_name }}
+                span {{ record.text }}

@@ -6,7 +6,16 @@ module.exports = function (app, passport) {
     // HOME PAGE SPA Start page ========
     // =====================================
     app.get('/', index);
-    app.get('/partials/twitterService', isLoggedIn);
+    app.get('/partials/twitterService', isLoggedIn, function (req, res) {
+        getTwitterTimeLine(req, function (err, data, response) {
+            if(err) {
+                res.send(err, 500);
+                res.end('');
+                return;
+            }
+            res.render('partials/twitterService');
+        });
+    });
 
 // GET /auth/twitter
 //   Use passport.authenticate() as route middleware to authenticate the
@@ -28,9 +37,16 @@ module.exports = function (app, passport) {
     }));
 
     // JSON API
-    app.get('/api/twitter/timeline', function (req, res) {
-        console.log(req);
-        res.end('');
+    app.get('/api/twitter/timeline', isLoggedIn, function (req, res) {
+        getTwitterTimeLine(req, function (err, data, response) {
+            if(err) {
+                res.send(err, 500);
+                res.end('');
+                return;
+            }
+
+            res.send(JSON.parse(data));
+        });
     });
 
     // =====================================
@@ -59,6 +75,16 @@ module.exports = function (app, passport) {
             res.send(401);
         else
             next();
+    }
+
+    function getTwitterTimeLine(req, callback) {
+        passport._strategies.twitter._oauth._performSecureRequest(
+            req.user.twitter_token,
+            req.user.twitter_token_secret,
+            'GET',
+            'https://api.twitter.com/1.1/statuses/home_timeline.json?count=10',
+            null,
+            null, null, callback);
     }
 
     function index(req, res) {

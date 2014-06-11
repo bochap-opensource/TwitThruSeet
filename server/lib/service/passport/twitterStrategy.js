@@ -18,6 +18,8 @@ module.exports.strategy = function(options) {
                 // represent the logged-in user.  In a typical application, you would want
                 // to associate the Twitter account with a user record in your database,
                 // and return that user instead.
+                profile.twitter_token = token;
+                profile.twitter_token_secret = tokenSecret;
                 return done(null, profile);
             });
         }
