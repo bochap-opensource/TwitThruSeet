@@ -57,7 +57,10 @@ function TwitterCreateCtrl($scope, $http) {
     $scope.status = '';
     $scope.reset = function () {
         $scope.reset();
-    }
+    };
+    $scope.submit = function() {
+        var test = $scope.$flow;
+    };
 }
 
-TwitterCreateCtrl.$inject = ['$sce', '$scope', '$http'];
+TwitterCreateCtrl.$inject = ['$scope', '$http'];
