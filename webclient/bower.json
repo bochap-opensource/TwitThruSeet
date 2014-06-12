@@ -1,0 +1,24 @@
+{
+  "name": "TwitThruSeet",
+  "version": "0.0.1",
+  "homepage": "https://github.com/oredi/TwitThruSeet",
+  "authors": [
+    "Darren Seet Serkai <darren@seet.me>"
+  ],
+  "description": "This application is a demonstration of using Node.Js, AngularJS and Twitter Bootstrap to create a responsive web application to access the Twitter API timeline and tweeting features. To begin please click on Twitter Service.",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "angular": "~1.2.17",
+    "angular-route": "~1.2.17",
+    "angular-mocks": "~1.2.17",
+    "bootstrap": "~3.1.1"
+  }
+}

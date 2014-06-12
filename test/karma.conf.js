@@ -15,20 +15,19 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     // ordering is important here since it is not using require js
     files: [
-        {pattern: 'webclient/lib/angular/angular.js', watched: false},
-        {pattern: 'webclient/lib/angular/angular-mocks.js', watched: false},
-        {pattern: 'webclient/lib/jquery/jquery-2.0.3.min.js', watched: false},
-        {pattern: 'webclient/lib/bootstrap/js/*.js', watched: false},
+        {pattern: 'webclient/bower_components/jquery/dist/jquery.min.js', watched: false},
+        {pattern: 'webclient/bower_components/angular/angular.min.js', watched: false},
+        {pattern: 'webclient/bower_components/angular-route/angular-route.min.js', watched: false},
+        {pattern: 'webclient/bower_components/angular-mocks/angular-mocks.js', watched: false},
+        {pattern: 'webclient/bower_components/bootstrap/dist/js/bootstrap.min.js', watched: false},
         {pattern: 'node_modules/ng-midway-tester/src/ngMidwayTester.js', watched: false},
-        'webclient/**/*.js',
+        'webclient/js/**/*.js',
         'test/spec/**/*.spec.js'
     ],
 
 
     // list of files to exclude
-    exclude: [
-        {pattern: 'webclient/lib/angular/angular-scenario.js'}
-    ],
+    exclude: [],
 
 
     // test results reporter to use
