@@ -1,13 +1,16 @@
 .row
     .col-lg-12
         h1 {{ title }}
-        div(class=['.panel', '.panel-default'])
+.row
+    .col-lg-6
+        div(class=['panel', 'panel-default'])
             .panel-heading
-            span Latest tweets as of {{ last_refresh.toLocaleString() }} [Total: {{ data.result.length }} post(s)]
+                h4.panel-title Latest tweets as of {{ last_refresh.toLocaleString() }} [Total: {{ data.result.length }} post(s)]
             .panel-body
                 .btn-toolbar
-                    a(class=['btn btn-primary btn-md'], ng-click='getNewTwits()', ng-disabled='isLoadingTwits') Get New Twits
-                    a(class=['btn btn-primary btn-md'], ng-click='getOlderTwits()', ng-disabled='isLoadingTwits') Get Older Twits
+                    .btn-group
+                        a(class=['btn btn-primary btn-md'], ng-click='getNewTwits()', ng-disabled='isLoadingTweets') Get New Tweet
+                        a(class=['btn btn-primary btn-md'], ng-click='getOlderTwits()', ng-disabled='isLoadingTweets') Get Older Tweet
             ul.list-group
                 li.list-group-item(ng-repeat="record in data.result")
                     span.badge
@@ -16,3 +19,12 @@
                     p
                         small {{ record.created_at }}
                     p.list-group-item-text {{ record.text }}
+    .col-lg-6
+        div(class=['panel', 'panel-default'])
+            .panel-heading
+                h4.panel-title Tweet now
+            .panel-body
+                form(role='form')
+                    .form-group
+                        label(for='twit')Compose new Tweet
+                        textarea.form-control(rows="4",maxlength=140,cols=50,required)

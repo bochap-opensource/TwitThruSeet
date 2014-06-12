@@ -24,7 +24,7 @@ function TwitterCtrl($sce, $scope, $http) {
         $scope.isLoadingTwits = isLoad;
     }
 
-    function loadTwits(max_id, since_id) {
+    function loadTweets(max_id, since_id) {
         $scope.last_refresh = new Date();
         setLoadProcess(true);
         $http.get('/api/twitter/timeline',{params: {max_id: max_id, since_id: since_id}})
@@ -38,10 +38,10 @@ function TwitterCtrl($sce, $scope, $http) {
                 setLoadProcess(false);
             });
     };
-    $scope.getNewTwits = function() {
+    $scope.getNewTweets = function() {
         loadTwits(null, $scope.data.since_id);
     };
-    $scope.getOlderTwits = function() {
+    $scope.getOlderTweets = function() {
         loadTwits($scope.data.max_id, null);
     };
     $scope.trustHtml = function(src) {
@@ -49,6 +49,6 @@ function TwitterCtrl($sce, $scope, $http) {
     };
 
     // Load data when controller is first created
-    loadTwits();
+    //loadTweets();
 }
 TwitterCtrl.$inject = ['$sce', '$scope', '$http'];
