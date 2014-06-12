@@ -55,12 +55,17 @@ TwitterTimelineCtrl.$inject = ['$sce', '$scope', '$http'];
 
 function TwitterCreateCtrl($scope, $http) {
     $scope.status = '';
+    $scope.uploader = {};
     $scope.reset = function () {
         $scope.reset();
     };
     $scope.submit = function() {
-        var test = $scope.$flow;
+        $scope.uploader.flow.upload();
+        var test;
     };
+
+
+
 }
 
 TwitterCreateCtrl.$inject = ['$scope', '$http'];

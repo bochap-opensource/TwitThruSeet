@@ -34,12 +34,11 @@
                                 img(src='assets/images/noimage.gif')
                             .thumbnail(ng-show='$flow.files.length')
                                 img(flow-img='$flow.files[0]')
-                            div
-                                span(ng-show='!$flow.files.length', flow-btn, class=['btn', 'btn-primary']) Select image
-                                input(type='file', style="visibility: hidden; position: absolute;")
-                                span(ng-show='$flow.files.length', flow-btn, class=['btn', 'btn-info']) Change
-                                input(type='file', style="visibility: hidden; position: absolute;")
-                                span(ng-show='$flow.files.length', ng-click='$flow.cancel()', class=['btn', 'btn-danger']) Remove
-                                p Only PNG, GIF, JPG, JPEG files allowed.
+                            span(ng-show='!$flow.files.length', flow-btn, class=['btn', 'btn-primary']) Select image
+                            input(type='file', style="visibility: hidden; position: absolute;")
+                            span(ng-show='$flow.files.length', flow-btn, class=['btn', 'btn-info']) Change
+                            input(type='file', style="visibility: hidden; position: absolute;")
+                            span(ng-show='$flow.files.length', ng-click='$flow.cancel()', class=['btn', 'btn-danger']) Remove
+                            p Only PNG, GIF, JPG, JPEG files allowed.
                     button(type="button", class=['btn', 'btn-primary'], ng-click='submit()', ng-disabled='form.$invalid') Submit
                     button(type="button", class=['btn', 'btn-default'], ng-click='reset()') Clear
