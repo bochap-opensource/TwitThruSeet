@@ -96,10 +96,10 @@ describe('Unit Testing: demoApiSeet Controllers', function () {
         $httpBackend = _$httpBackend_;
     }));
 
-    describe('TwitterCtrl', function () {
+    describe('TwitterTimelineCtrl', function () {
         var controller;
         beforeEach(inject(function ($controller, _$http_) {
-            controller = $controller('TwitterCtrl', { '$scope': $scope, $http: _$http_ });
+            controller = $controller('TwitterTimelineCtrl', { '$scope': $scope, $http: _$http_ });
             $httpBackend.expect('GET', '/api/twitter/timeline').respond({});
             $httpBackend.flush();
         }));

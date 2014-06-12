@@ -16,12 +16,11 @@ function EmptyCtrl() {
 }
 EmptyCtrl.$inject = [];
 
-function TwitterCtrl($sce, $scope, $http) {
-    $scope.title = 'Twitter Service';
+function TwitterTimelineCtrl($sce, $scope, $http) {
     $scope.data = {};
-    $scope.isLoadingTwits = false;
+    $scope.isLoadingTweets = false;
     function setLoadProcess(isLoad) {
-        $scope.isLoadingTwits = isLoad;
+        $scope.isLoadingTweets = isLoad;
     }
 
     function loadTweets(max_id, since_id) {
@@ -51,4 +50,14 @@ function TwitterCtrl($sce, $scope, $http) {
     // Load data when controller is first created
     //loadTweets();
 }
-TwitterCtrl.$inject = ['$sce', '$scope', '$http'];
+
+TwitterTimelineCtrl.$inject = ['$sce', '$scope', '$http'];
+
+function TwitterCreateCtrl($scope, $http) {
+    $scope.status = '';
+    $scope.reset = function () {
+        $scope.reset();
+    }
+}
+
+TwitterCreateCtrl.$inject = ['$sce', '$scope', '$http'];

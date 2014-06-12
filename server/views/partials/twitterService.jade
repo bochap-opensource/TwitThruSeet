@@ -1,16 +1,16 @@
 .row
     .col-lg-12
-        h1 {{ title }}
+        h1 Twitter Service
 .row
     .col-lg-6
-        div(class=['panel', 'panel-default'])
+        div(class=['panel', 'panel-default'], ng-controller='TwitterTimelineCtrl')
             .panel-heading
-                h4.panel-title Latest tweets as of {{ last_refresh.toLocaleString() }} [Total: {{ data.result.length }} post(s)]
+                h4.panel-title Timeline as of {{ last_refresh.toLocaleString() }} [Total: {{ data.result.length }} post(s)]
             .panel-body
                 .btn-toolbar
                     .btn-group
-                        a(class=['btn btn-primary btn-md'], ng-click='getNewTwits()', ng-disabled='isLoadingTweets') Get New Tweet
-                        a(class=['btn btn-primary btn-md'], ng-click='getOlderTwits()', ng-disabled='isLoadingTweets') Get Older Tweet
+                        a(class=['btn btn-primary btn-md'], ng-click='getNewTweets()', ng-disabled='isLoadingTweets') Get New Tweet
+                        a(class=['btn btn-primary btn-md'], ng-click='getOlderTweets()', ng-disabled='isLoadingTweets') Get Older Tweet
             ul.list-group
                 li.list-group-item(ng-repeat="record in data.result")
                     span.badge
@@ -20,11 +20,28 @@
                         small {{ record.created_at }}
                     p.list-group-item-text {{ record.text }}
     .col-lg-6
-        div(class=['panel', 'panel-default'])
+        div(class=['panel', 'panel-default'], ng-controller='TwitterCreateCtrl')
             .panel-heading
                 h4.panel-title Tweet now
             .panel-body
                 form(role='form')
                     .form-group
-                        label(for='twit')Compose new Tweet
-                        textarea.form-control(rows="4",maxlength=140,cols=50,required)
+                        label(for='status') Compose new Tweet
+                        textarea.form-control(id="status", rows="4", maxlength=140, cols=50, required, ng-model='status')
+                    .form-group
+                        div(flow-init='{singleFile:true}',flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]")
+                            .thumbnail(ng-show='!$flow.files.length')
+                                img(src='assets/noimage.gif')
+                            .thumbnail(ng-show='$flow.files.length')
+                                img(flow-img='$flow.files[0]')
+                            div
+                                span(class['btn', 'btn-primary'], ng-show='!$flow.files.length' flow-btn)
+                                    Select image
+                                    input(type='file')
+                                span(class['btn', 'btn-info'], ng-show='$flow.files.length' flow-btn)
+                                    Change
+                                    input(type='file')
+                                span(class['btn', 'btn-danger'], ng-show='$flow.files.length' ng-click='$flow.cancel()')
+                                p Only PNG, GIF, JPG, JPEG files allowed.
+                    button(type="button", class=['btn', 'btn-primary']) Submit
+                    button(type="button", class=['btn', 'btn-default'], ng-click='reset()') Clear
