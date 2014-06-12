@@ -2,6 +2,7 @@
  * Created by dseet on 6/9/2014.
  */
 var bigInt = require("big-integer");
+var url = require('url');
 
 module.exports = function (app, passport) {
     // =====================================
@@ -39,7 +40,6 @@ module.exports = function (app, passport) {
 
     // JSON API
     app.get('/api/twitter/timeline', isLoggedIn, function (req, res) {
-        console.log(req);
         getTwitterTimeLine(req, function (err, data, response) {
             if(err) {
                 res.send(err, 500);
@@ -78,13 +78,17 @@ module.exports = function (app, passport) {
     }
 
     function getTwitterTimeLine(req, callback) {
+        var uri = 'https://api.twitter.com/1.1/statuses/home_timeline.json?count=10';
+        if(req.query.since_id) uri += '&since_id=' + req.query.since_id;
+        if(req.query.max_id) uri += '&max_id=' + req.query.max_id;
         passport._strategies.twitter._oauth._performSecureRequest(
             req.user.twitter_token,
             req.user.twitter_token_secret,
             'GET',
-            'https://api.twitter.com/1.1/statuses/home_timeline.json?count=10',
+            uri,
             null,
             null, null, function (err, data, response) {
+                var processedData;
                 if(!err) {
                     result = [];
                     var max_id, since_id;

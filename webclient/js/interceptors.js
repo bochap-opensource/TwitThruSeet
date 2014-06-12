@@ -19,9 +19,11 @@ angular.module('demoApiSeet.interceptors', [])
                             var authUrl = $location.absUrl();
                             $window.location.href = authUrl;
                         }
+                    } else {
+                        $location.path('/error');
                     }
                     return $q.reject(rejection);
                 }
             }
         }];
-    });
+    })

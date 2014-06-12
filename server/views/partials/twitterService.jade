@@ -2,16 +2,17 @@
     .col-lg-12
         h1 {{ title }}
         div(class=['.panel', '.panel-default'])
-            .panel-heading Latest tweets as of {{ last_refresh.toLocaleString() }} [Total: {{ data.result.length }} post(s)]
+            .panel-heading
+            span Latest tweets as of {{ last_refresh.toLocaleString() }} [Total: {{ data.result.length }} post(s)]
             .panel-body
                 .btn-toolbar
-                    a(class=['btn btn-primary btn-md'], ng-click='{{loadTweets(null, data.since_id)}}') Get New Posts
-                    a(class=['btn btn-primary btn-md'], ng-click='{{loadTweets(data.max_id, null)}}') Get Older Posts
+                    a(class=['btn btn-primary btn-md'], ng-click='getNewTwits()', ng-disabled='isLoadingTwits') Get New Twits
+                    a(class=['btn btn-primary btn-md'], ng-click='getOlderTwits()', ng-disabled='isLoadingTwits') Get Older Twits
             ul.list-group
                 li.list-group-item(ng-repeat="record in data.result")
                     span.badge
                         img.img-thumbnail(ng-src='{{ record.user_profile_image_url }}', alt='{{ record.user_name }}')
                     h4.list-group-item-heading {{ record.user_screen_name }}
-                    p()
+                    p
                         small {{ record.created_at }}
                     p.list-group-item-text {{ record.text }}

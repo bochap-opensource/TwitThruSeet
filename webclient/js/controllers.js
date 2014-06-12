@@ -11,27 +11,44 @@
     $scope.name = 'Error!'
   });
 }*/
-
 function EmptyCtrl() {
 
 }
 EmptyCtrl.$inject = [];
 
-
 function TwitterCtrl($sce, $scope, $http) {
     $scope.title = 'Twitter Service';
     $scope.data = {};
-    $scope.loadTweets = function (max_id, since_id) {
+    $scope.isLoadingTwits = false;
+    function setLoadProcess(isLoad) {
+        $scope.isLoadingTwits = isLoad;
+    }
+
+    function loadTwits(max_id, since_id) {
         $scope.last_refresh = new Date();
-        $http.get('/api/twitter/timeline', { params: { max_id: max_id, since_id: since_id }}).success(function(data) {
-            $scope.data = data;
-        });
+        setLoadProcess(true);
+        $http.get('/api/twitter/timeline',{params: {max_id: max_id, since_id: since_id}})
+            .then(function(response){
+                // success
+                if(since_id == null || response.data.length > 0)
+                    $scope.data = response.data;
+            }, function(error){
+                // error
+            }).then(function(response) {
+                setLoadProcess(false);
+            });
+    };
+    $scope.getNewTwits = function() {
+        loadTwits(null, $scope.data.since_id);
+    };
+    $scope.getOlderTwits = function() {
+        loadTwits($scope.data.max_id, null);
     };
     $scope.trustHtml = function(src) {
         return $sce.trustAsHtml(src);
     };
 
     // Load data when controller is first created
-    $scope.loadTweets();
+    loadTwits();
 }
 TwitterCtrl.$inject = ['$sce', '$scope', '$http'];

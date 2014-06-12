@@ -17,7 +17,7 @@ module.exports = function(config) {
     files: [
         {pattern: 'webclient/lib/angular/angular.js', watched: false},
         {pattern: 'webclient/lib/angular/angular-mocks.js', watched: false},
-        {pattern: 'webclient/lib/jquery/*.js', watched: false},
+        {pattern: 'webclient/lib/jquery/jquery-2.0.3.min.js', watched: false},
         {pattern: 'webclient/lib/bootstrap/js/*.js', watched: false},
         {pattern: 'node_modules/ng-midway-tester/src/ngMidwayTester.js', watched: false},
         'webclient/**/*.js',
@@ -27,7 +27,7 @@ module.exports = function(config) {
 
     // list of files to exclude
     exclude: [
-        'webclient/lib/angular/angular-scenario.js'
+        {pattern: 'webclient/lib/angular/angular-scenario.js'}
     ],
 
 
