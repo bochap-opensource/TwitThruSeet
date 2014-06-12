@@ -6,54 +6,89 @@
 describe('Unit Testing: demoApiSeet Controllers', function () {
     var $controller, $scope, $httpBackend;
     var sourcedata = {
-        max_id: 1,
-        results: {
-            5: {
-                "created_at": "Tue Jun 12 22:15:04 +0000 2014"
-                , "text": "This is item 5 of time line"
-                , "user": {
-                    "id": 1, "name": "User 1", "screen_name": "User_1"
-                    , "profile_image_url": "http:\/\/pbs.twimg.com\/profile_images\/3745958419\/9999d627e55bde3c66ebf1682c5ce47a_normal.png"
-                    , "profile_image_url_https": "https:\/\/pbs.twimg.com\/profile_images\/3745958419\/9999d627e55bde3c66ebf1682c5ce47a_normal.png"
-                }
-            }
-            , 4: {
-                "created_at": "Tue Jun 10 22:15:04 +0000 2014"
-                , "text": "This is item 4 of time line"
-                , "user": {
-                    "id": 1, "name": "User 1", "screen_name": "User_1"
-                    , "profile_image_url": "http:\/\/pbs.twimg.com\/profile_images\/3745958419\/9999d627e55bde3c66ebf1682c5ce47a_normal.png"
-                    , "profile_image_url_https": "https:\/\/pbs.twimg.com\/profile_images\/3745958419\/9999d627e55bde3c66ebf1682c5ce47a_normal.png"
-                }
-            }
-            , 3: {
-                "created_at": "Tue Jun 10 21:00:54 +0000 2014"
-                , "text": "This is item 3 of time line"
-                , "user": {
-                    "id": 2, "name": "User 2", "screen_name": "User_2"
-                    , "profile_image_url": "http:\/\/pbs.twimg.com\/profile_images\/443617852285648896\/ne7ZJOhu_normal.jpeg"
-                    , "profile_image_url_https": "https:\/\/pbs.twimg.com\/profile_images\/443617852285648896\/ne7ZJOhu_normal.jpeg"
-                }
-            }
-            , 2: {
-                "created_at": "Tue Jun 10 21:00:21 +0000 2014"
-                , "text": "This is item 2 of time line"
-                , "user": {
-                    "id": 3, "name": "User 3", "screen_name": "User_3"
-                    , "profile_image_url": "http:\/\/pbs.twimg.com\/profile_images\/2344189796\/o5u8bz6cep1bfkasvsm1_normal.jpeg"
-                    , "profile_image_url_https": "https:\/\/pbs.twimg.com\/profile_images\/2344189796\/o5u8bz6cep1bfkasvsm1_normal.jpeg"
-                }
-            }
-            , 1: {
-                "created_at": "Tue Jun 10 04:33:41 +0000 2014"
-                , "text": "This is item 1 of time line"
-                , "user": {
-                    "id": 3, "name": "User 3", "screen_name": "User_3"
-                    , "profile_image_url": "http:\/\/pbs.twimg.com\/profile_images\/2344189796\/o5u8bz6cep1bfkasvsm1_normal.jpeg"
-                    , "profile_image_url_https": "https:\/\/pbs.twimg.com\/profile_images\/2344189796\/o5u8bz6cep1bfkasvsm1_normal.jpeg"
-                }
-            }
-        }
+        max_id: "3",
+        since_id: "13",
+        result: [
+            {   id_str: "13",
+                created_at: 'Wed Jun 14 11:56:02 +0000 2014',
+                text: 'Text for tweet 13',
+                user_screen_name: 'User_1',
+                user_name: 'User 1',
+                user_profile_image_url: 'http://abs.twimg.com/sticky/default_profile_images/default_profile_1_normal.png' },
+            {   id_str: "12",
+                created_at: 'Wed Jun 11 13:56:02 +0000 2014',
+                text: 'Text for tweet 12',
+                user_screen_name: 'User_2',
+                user_name: 'User 2',
+                user_profile_image_url: 'http://abs.twimg.com/sticky/default_profile_images/default_profile_2_normal.png' },
+            {   id_str: "11",
+                created_at: 'Wed Jun 11 12:56:02 +0000 2014',
+                text: 'Text for tweet 11',
+                user_screen_name: 'User_3',
+                user_name: 'User 3',
+                user_profile_image_url: 'http://abs.twimg.com/sticky/default_profile_images/default_profile_3_normal.png' },
+            {   id_str: "10",
+                created_at: 'Wed Jun 11 11:56:02 +0000 2014',
+                text: 'Text for tweet 10',
+                user_screen_name: 'User_1',
+                user_name: 'User 1',
+                user_profile_image_url: 'http://abs.twimg.com/sticky/default_profile_images/default_profile_1_normal.png' },
+            {   id_str: "9",
+                created_at: 'Wed Jun 11 10:56:02 +0000 2014',
+                text: 'Text for tweet 9',
+                user_screen_name: 'User_2',
+                user_name: 'User 2',
+                user_profile_image_url: 'http://abs.twimg.com/sticky/default_profile_images/default_profile_2_normal.png' },
+            {   id_str: "8",
+                created_at: 'Wed Jun 11 09:56:02 +0000 2014',
+                text: 'Text for tweet 8',
+                user_screen_name: 'User_3',
+                user_name: 'User 3',
+                user_profile_image_url: 'http://abs.twimg.com/sticky/default_profile_images/default_profile_3_normal.png' },
+            {   id_str: "7",
+                created_at: 'Wed Jun 11 08:56:02 +0000 2014',
+                text: 'Text for tweet 7',
+                user_screen_name: 'User_4',
+                user_name: 'User 4',
+                user_profile_image_url: 'http://abs.twimg.com/sticky/default_profile_images/default_profile_4_normal.png' },
+            {   id_str: "6",
+                created_at: 'Wed Jun 11 07:56:02 +0000 2014',
+                text: 'Text for tweet 6',
+                user_screen_name: 'User_5',
+                user_name: 'User 5',
+                user_profile_image_url: 'http://abs.twimg.com/sticky/default_profile_images/default_profile_5_normal.png' },
+            {   id_str: "5",
+                created_at: 'Wed Jun 11 06:56:02 +0000 2014',
+                text: 'Text for tweet 5',
+                user_screen_name: 'User_1',
+                user_name: 'User 1',
+                user_profile_image_url: 'http://abs.twimg.com/sticky/default_profile_images/default_profile_1_normal.png' },
+            {   id_str: "4",
+                created_at: 'Wed Jun 11 06:29:17 +0000 2014',
+                text: 'Text for tweet 4',
+                user_screen_name: 'User_2',
+                user_name: 'User 2',
+                user_profile_image_url: 'http://abs.twimg.com/sticky/default_profile_images/default_profile_2_normal.png' }
+            /*,
+            {   id_str: "3",
+                created_at: 'Wed Jun 11 00:17:07 +0000 2014',
+                text: 'Text for tweet 3',
+                user_screen_name: 'User_3',
+                user_name: 'User 3',
+                user_profile_image_url: 'http://abs.twimg.com/sticky/default_profile_images/default_profile_3_normal.png' },
+            {   id_str: "2",
+                created_at: 'Tue Jun 10 22:15:04 +0000 2014',
+                text: 'Text for tweet 2',
+                user_screen_name: 'User_4',
+                user_name: 'User 4',
+                user_profile_image_url: 'http://abs.twimg.com/sticky/default_profile_images/default_profile_4_normal.png' },
+            {   id_str: "1",
+                created_at: 'Tue Jun 10 21:19:08 +0000 2014',
+                text: 'Text for tweet 1',
+                user_screen_name: 'User_5',
+                user_name: 'User 5',
+                user_profile_image_url: 'http://abs.twimg.com/sticky/default_profile_images/default_profile_5_normal.png' }*/
+        ]
     }
 
     beforeEach(inject(function (_$rootScope_, _$httpBackend_) {
@@ -82,26 +117,33 @@ describe('Unit Testing: demoApiSeet Controllers', function () {
         });
 
         describe('calling loadTweets', function() {
-            it('should have an empty data object when the timeline is empty', function () {
-                $httpBackend.expect('GET', '/api/twitter/timeline').respond({});
-                expect($scope.data).toEqual({});
-                $scope.loadTweets();
-                $httpBackend.flush();
-                expect($scope.data).toEqual({});
-                expect($scope.data.results).toBeUndefined();
-                expect($scope.data.max_id).toBeUndefined();
+            describe('with empty timeline', function () {
+                it('should return an empty data object', function () {
+                    $httpBackend.expect('GET', '/api/twitter/timeline').respond({});
+                    expect($scope.data).toEqual({});
+                    $scope.loadTweets();
+                    $httpBackend.flush();
+                    expect($scope.data).toEqual({});
+                    expect($scope.data.results).toBeUndefined();
+                    expect($scope.data.since_id).toBeUndefined();
+                    expect($scope.data.max_id).toBeUndefined();
+                });
             });
 
-            it('should have a data object loaded with 5 results when there 5 records in the timeline', function () {
-                $httpBackend.expect('GET', '/api/twitter/timeline').respond(sourcedata);
-                expect($scope.data).toEqual({});
-                $scope.loadTweets();
-                $httpBackend.flush();
-                // Using ECMA5 Object keys here since we have ability to control the browser, can consider writing the browser polyfill
-                expect(Object.keys($scope.data.results).length).toBe(5);
-                expect($scope.data.max_id).toBe(1);
+            describe('with 10 entries in timeline', function () {
+                it('should return a data object with 10 records', function () {
+                    $httpBackend.expect('GET', '/api/twitter/timeline').respond(sourcedata);
+                    expect($scope.data).toEqual({});
+                    $scope.loadTweets();
+                    $httpBackend.flush();
+
+                    // Using ECMA5 Object keys here since we have ability to control the browser, can consider writing the browser polyfill
+                    expect($scope.data.result.length).toBe(10);
+                    expect($scope.data.since_id).toBe("13");
+                    expect($scope.data.max_id).toBe("3");
+                });
             });
-        })
+        });
 
         afterEach(function() {
             $httpBackend.verifyNoOutstandingExpectation();

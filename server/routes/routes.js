@@ -1,6 +1,8 @@
 /**
  * Created by dseet on 6/9/2014.
  */
+var bigInt = require("big-integer");
+
 module.exports = function (app, passport) {
     // =====================================
     // HOME PAGE SPA Start page ========
@@ -10,7 +12,6 @@ module.exports = function (app, passport) {
         getTwitterTimeLine(req, function (err, data, response) {
             if(err) {
                 res.send(err, 500);
-                res.end('');
                 return;
             }
             res.render('partials/twitterService');
@@ -38,14 +39,13 @@ module.exports = function (app, passport) {
 
     // JSON API
     app.get('/api/twitter/timeline', isLoggedIn, function (req, res) {
+        console.log(req);
         getTwitterTimeLine(req, function (err, data, response) {
             if(err) {
                 res.send(err, 500);
-                res.end('');
                 return;
             }
-
-            res.send(JSON.parse(data));
+            res.send(data);
         });
     });
 
@@ -84,7 +84,32 @@ module.exports = function (app, passport) {
             'GET',
             'https://api.twitter.com/1.1/statuses/home_timeline.json?count=10',
             null,
-            null, null, callback);
+            null, null, function (err, data, response) {
+                if(!err) {
+                    result = [];
+                    var max_id, since_id;
+                    var jsonData = JSON.parse(data);
+                    for (var i = 0; i < jsonData.length; i++) {
+                        var record = jsonData[i];
+                        result.push({
+                            id_str: record.id_str,
+                            created_at: record.created_at,
+                            text: record.text,
+                            user_screen_name: record.user.screen_name,
+                            user_name: record.user.name,
+                            user_profile_image_url: record.user.profile_image_url
+                        });
+                        if(i == 0) since_id = record.id_str;
+                        if(i == (jsonData.length - 1)) max_id = (bigInt(record.id_str) - 1).toString();
+                    }
+                    processedData = {
+                        result: result,
+                        since_id: since_id,
+                        max_id: max_id
+                    };
+                }
+                callback(err, processedData, response);
+            });
     }
 
     function index(req, res) {

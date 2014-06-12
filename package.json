@@ -12,6 +12,7 @@
     "karma-jasmine": "~0.1.5",
     "karma": "~0.12.16",
     "ng-midway-tester": "~2.0.5",
-    "protractor": "~0.24.1"
+    "protractor": "~0.24.1",
+    "big-integer": "~1.2.10"
   }
 }
