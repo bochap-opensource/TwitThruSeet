@@ -3,6 +3,8 @@
  */
 var bigInt = require("big-integer");
 var url = require('url');
+var utf8 = require('utf8');
+var fs = require('fs');
 
 module.exports = function (app, passport) {
     // =====================================
@@ -47,6 +49,43 @@ module.exports = function (app, passport) {
             }
             res.send(data);
         });
+    });
+    function isValidGeoCoord(value) {
+        var value = parseInt(value);
+        if(!isNaN(value) && value >= -180 && value <= 180) return true;
+        return false;
+    }
+    // JSON API
+    app.post('/api/twitter/update', isLoggedIn, function (req, res) {
+        var uri = 'update.json';
+        var encoding = "application/json";
+        var path;
+        var body = { status: utf8.encode(req.body.status)  };
+        if(req.body.latitude && isValidGeoCoord(req.body.latitude)) body.lat = utf8.encode(req.body.latitude);
+        if(req.body.longitude && isValidGeoCoord(req.body.longitude)) body.long = utf8.encode(req.body.longitude);
+
+/*        if(req.files != undefined && req.files.file != undefined) {
+            uri = "update_with_media.json";
+            encoding = "multipart/form-data";
+            path = req.files.file.path;
+            body.media = [ fs.createReadStream(path)  ];
+        }*/
+        passport._strategies.twitter._oauth.post(
+            'https://api.twitter.com/1.1/statuses/' + uri,
+            req.user.twitter_token,
+            req.user.twitter_token_secret,
+            body, encoding, function (err, data, response) {
+                if(!err) {
+                    res.send(500, err);
+                }
+                if(fs.existsSync())
+                fs.exists(path, function (exists) {
+                    if(exists) {
+                        fs.unlink(path);
+                    }
+                })
+                res.send(200);
+            });
     });
 
     // =====================================

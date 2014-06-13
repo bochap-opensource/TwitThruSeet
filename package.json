@@ -13,6 +13,7 @@
     "karma": "~0.12.16",
     "ng-midway-tester": "~2.0.5",
     "protractor": "~0.24.1",
-    "big-integer": "~1.2.10"
+    "big-integer": "~1.2.10",
+    "utf8": "~2.0.0"
   }
 }
