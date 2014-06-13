@@ -2,7 +2,7 @@
   "name": "application-name",
   "version": "0.0.1",
   "private": true,
-  "scripts": { "start": "server/app.js"},
+  "scripts": { "start": "node server/app.js"},
   "dependencies": {
     "express": "~3.2.6",
     "jade": "~0.31.2",
