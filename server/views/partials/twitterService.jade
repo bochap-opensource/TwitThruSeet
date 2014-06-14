@@ -3,7 +3,7 @@
         h1 Twitter Service
 .row
     .col-lg-6
-        div(class=['panel', 'panel-default'], ng-controller='TwitterTimelineCtrl')
+        div(class=['panel', 'panel-default'], ng-controller='TwitterTimelineCtrl', ng-show='isInitialized')
             .panel-heading
                 h4.panel-title Timeline as of {{ last_refresh.toLocaleString() }} [Total: {{ data.result.length }} post(s)]
             .panel-body
@@ -20,10 +20,14 @@
                         small {{ record.created_at }}
                     p.list-group-item-text {{ record.text }}
     .col-lg-6
-        div(class=['panel', 'panel-default'], ng-controller='TwitterCreateCtrl')
+        div(class=['panel', 'panel-default'], ng-controller='TwitterCreateCtrl', ng-show='isInitialized')
             .panel-heading
                 h4.panel-title Tweet now
             .panel-body
+                div(ng-show='isSuccess', class=['alert', 'alert-success'])
+                    | Tweet has been posted successfully
+                div(ng-show='isError', class=['alert', 'alert-danger'])
+                    | Error: {{ resultMessage }}
                 form(name="form", role='form', novalidate)
                     .form-group
                         label(for='status') Compose new Tweet

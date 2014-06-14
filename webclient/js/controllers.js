@@ -36,6 +36,7 @@ function TwitterTimelineCtrl($sce, $scope, $http) {
         setLoadingState(true);
         $http.get('/api/twitter/timeline',{params: {max_id: max_id, since_id: since_id}})
             .then(function(response){
+                $scope.isInitialized = true;
                 // success
                 if(since_id == null || response.data.length > 0)
                     $scope.data = response.data;
@@ -48,6 +49,7 @@ function TwitterTimelineCtrl($sce, $scope, $http) {
 
 
     function init() {
+        $scope.isInitialized = false;
         $scope.data = {};
         setLoadingState(false);
         // Load data when controller is first created
@@ -61,9 +63,15 @@ TwitterTimelineCtrl.$inject = ['$sce', '$scope', '$http'];
 
 function TwitterCreateCtrl(geolocation, $upload, $scope, $http) {
     $scope.reset = function() {
-        $scope.data = $scope.orig;
-        getGeoIp();
+        $scope.status = '';
+        $scope.file = null;
+        $scope.isSuccess = false;
+        $scope.isError = false;
+        $scope.resultMessage = null;
+
+        setSubmittingState(false);
     };
+
     $scope.onFileSelect = function(files) {
         $scope.file = files[0];
     };
@@ -81,6 +89,13 @@ function TwitterCreateCtrl(geolocation, $upload, $scope, $http) {
         }).progress(function(event) {
             console.log('percent: ' + parseInt(100.0 * event.loaded / event.total));
         }).success(function(data, status, headers, config) {
+            setSubmittingState(false);
+            $scope.reset();
+            $scope.isSuccess = true;
+        }).error(function (data) {
+            setSubmittingState(false);
+            $scope.isError = true;
+            $scope.resultMessage = JSON.stringify(data);
             setSubmittingState(false);
         })
     };
@@ -110,15 +125,15 @@ function TwitterCreateCtrl(geolocation, $upload, $scope, $http) {
             $scope.geoIp = data;
             $scope.map.center.latitude = data.coords.latitude;
             $scope.map.center.longitude = data.coords.longitude;
+            $scope.isInitialized = true;
         });
     }
 
     function init() {
-        $scope.status = '';
-        $scope.file = null;
-        setSubmittingState(false);
+        $scope.isInitialized = false;
+        $scope.isSuccess = false;
+        $scope.isError = false;
         getGeoIp();
-        $scope.orig = [$scope.data];
     }
 
     init();

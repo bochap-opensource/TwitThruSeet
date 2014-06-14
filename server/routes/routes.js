@@ -14,7 +14,7 @@ module.exports = function (app, passport) {
     app.get('/partials/twitterService', isLoggedIn, function (req, res) {
         getTwitterTimeLine(req, function (err, data, response) {
             if(err) {
-                res.send(err, 500);
+                res.send(err, err.statusCode);
                 return;
             }
             res.render('partials/twitterService');
@@ -75,16 +75,17 @@ module.exports = function (app, passport) {
             req.user.twitter_token,
             req.user.twitter_token_secret,
             body, encoding, function (err, data, response) {
-                if(!err) {
-                    res.send(500, err);
+                if(err) {
+                    res.send(err.statusCode, err);
+                } else {
+                    res.send(200);
                 }
-                if(fs.existsSync())
-                fs.exists(path, function (exists) {
+
+                fs.existsSync(path, function (exists) {
                     if(exists) {
                         fs.unlink(path);
                     }
-                })
-                res.send(200);
+                });
             });
     });
 

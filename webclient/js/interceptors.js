@@ -13,13 +13,14 @@ angular.module('demoApiSeet.interceptors', [])
                     return response || $q.when(response);
                 },
                 responseError: function(rejection) {
+                    $q.when(rejection.status == 401)
                     if (rejection.status === 401) {
                         if(redirectUrl) {
                             $location.path(redirectUrl);
                             var authUrl = $location.absUrl();
                             $window.location.href = authUrl;
                         }
-                    } else {
+                    } else if (rejection.status === 429) {
                         $location.path('/error');
                     }
                     return $q.reject(rejection);
