@@ -39,5 +39,6 @@
                         p Coordinates (lat: {{ geoIp.coords.latitude }}, long: {{ geoIp.coords.longitude }})
                     button(type="button", class=['btn', 'btn-primary'], ng-click='submit()', ng-disabled='form.$invalid || isSubmittingTweet') Submit
                     button(type="button", class=['btn', 'btn-default'], ng-click='reset()') Clear
-                google-map(class="google-map-container", center="map.center", zoom="map.zoom", events="map.events")
-                    marker(coords="map.center")
+                div(ng-hide='isGeoIpDisabled')
+                    google-map(class="google-map-container", center="map.center", zoom="map.zoom", events="map.events")
+                        marker(coords="map.center")
