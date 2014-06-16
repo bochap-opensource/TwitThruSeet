@@ -113,7 +113,7 @@ function TwitterCreateCtrl(geolocation, $upload, $scope, $http) {
         $scope.isSubmittingTweet = isSubmit;
     }
 
-    function getGeoIp() {
+    $scope.getGeoIp = function() {
         geolocation.getLocation().then(function(data){
             $scope.geoIp = data;
             $scope.isGeoIpDisabled = false;
