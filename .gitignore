@@ -2,4 +2,3 @@
 node_modules
 webclient/bower_components
 test
-server/config/authorization.js
