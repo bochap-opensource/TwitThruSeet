@@ -93,12 +93,13 @@ function TwitterCreateCtrl(geolocation, $upload, $scope, $http) {
     };
 
     $scope.map = {
-        center: {
-            latitude: 0,
-            longitude: 0
-        },
         zoom: 15,
         events: {
+            center_changed: function() {
+                $scope.$apply(function () {
+                    $scope.mapInstance = map;
+                });
+            },
             tilesloaded: function (map) {
                 $scope.$apply(function () {
                     $scope.mapInstance = map;
