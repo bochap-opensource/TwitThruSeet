@@ -91,22 +91,6 @@ function TwitterCreateCtrl(geolocation, $upload, $scope, $http) {
         })
     };
 
-    $scope.map = {
-        center: {
-            latitude: 0,
-            longitude: 0
-        },
-        zoom: 15,
-        events: {
-            tilesloaded: function (map) {
-                $scope.$apply(function () {
-                    $scope.mapInstance = map;
-                });
-            }
-        },
-        markClick: false,
-        fit: true};
-
     function setSubmittingState(isSubmit) {
         $scope.isSubmittingTweet = isSubmit;
     }
@@ -114,9 +98,21 @@ function TwitterCreateCtrl(geolocation, $upload, $scope, $http) {
     function getGeoIp() {
         geolocation.getLocation().then(function(data){
             $scope.geoIp = data;
-            $scope.map.center = {
-                latitude: data.coords.latitude,
-                longitude: data.coords.longitude
+            $scope.map = {
+                center: {
+                    latitude: data.coords.latitude,
+                    longitude: data.coords.longitude
+                },
+                zoom: 15,
+                events: {
+                    tilesloaded: function (map) {
+                        $scope.$apply(function () {
+                            $scope.mapInstance = map;
+                        });
+                    }
+                },
+                markClick: false,
+                fit: true
             };
             $scope.isGeoIpDisabled = false;
         }, function(reason) {
