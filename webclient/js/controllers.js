@@ -118,8 +118,8 @@ function TwitterCreateCtrl(geolocation, $upload, $scope, $http) {
         geolocation.getLocation().then(function(data){
             $scope.isGeoIpDisabled = false;
             $scope.geoIp = data;
-            $scope.map.center.latitude = latitude;
-            $scope.map.center.longitude = longitude;
+            $scope.map.center.latitude = $scope.geoIp.coords.latitude;
+            $scope.map.center.longitude = $scope.geoIp.coords.longitude;
             $scope.map.refresh();
         }, function(reason) {
             $scope.isGeoIpDisabled = true;
