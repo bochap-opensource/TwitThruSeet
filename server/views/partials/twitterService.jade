@@ -12,7 +12,7 @@
                         a(class=['btn btn-primary btn-md'], ng-click='loadTweets()', ng-disabled='isLoadingTweets') Refresh
                 .form-group
                     label(for='numOfTweets') Number of Tweets to load:
-                    input(type="number", id="numOfTweets", min="5", max="50", ng-model="count", ng-init='count=10' , ng-change='loadTweets()')
+                    input(type="number", id="numOfTweets", min="5", max="50", ng-model="count" , ng-change='loadTweets()')
             ul.list-group
                 li.list-group-item(ng-repeat="record in data")
                     span.badge

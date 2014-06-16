@@ -42,6 +42,7 @@ function TwitterTimelineCtrl($sce, $scope, $http) {
 
     function init() {
         $scope.isInitialized = false;
+        $scope.count = 10;
         setLoadingState(false);
         // Load data when controller is first created
         $scope.loadTweets();
