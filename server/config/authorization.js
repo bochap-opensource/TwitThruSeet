@@ -6,8 +6,8 @@
  */
 module.exports = {
     'twitterAuth': {
-        'consumerKey': 'wfb64TLhjdf2qQSYoy9HCAHS3',
-        'consumerSecret': '94xgtDGmFBCG3K0fF9wUnlyW64nMPd3FtIqxLOoP1ysgIEyA2R',
+        'consumerKey': '',
+        'consumerSecret': '',
         'callbackURL': 'http://demoapi.seet.me/auth/twitter/callback'
     }
 };
