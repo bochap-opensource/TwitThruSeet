@@ -115,9 +115,13 @@ function TwitterCreateCtrl(geolocation, $upload, $scope, $http) {
 
     $scope.getGeoIp = function() {
         geolocation.getLocation().then(function(data){
-            $scope.geoIp = data;
             $scope.isGeoIpDisabled = false;
-            $scope.map.control.refresh({latitude: data.coords.latitude, longitude: data.coords.longitude});
+            $scope.geoIp = data;
+            $scope.map.center= {
+                latitude: data.coords.latitude,
+                longitude: data.coords.longitude
+            };
+            $scope.map.refresh();
         }, function(reason) {
             $scope.isGeoIpDisabled = true;
         });
