@@ -92,10 +92,6 @@ function TwitterCreateCtrl(geolocation, $upload, $scope, $http) {
     };
 
     $scope.map = {
-        center: {
-            latitude: 0,
-            longitude: 0
-        },
         zoom: 15,
         events: {
             tilesloaded: function (map) {
@@ -114,16 +110,20 @@ function TwitterCreateCtrl(geolocation, $upload, $scope, $http) {
     function getGeoIp() {
         geolocation.getLocation().then(function(data){
             $scope.geoIp = data;
-            $scope.map.center.latitude = data.coords.latitude;
-            $scope.map.center.longitude = data.coords.longitude;
-            $scope.isInitialized = true;
+            $scope.map.center = {
+                latitude: data.coords.latitude,
+                longitude: data.coords.longitude
+            };
+            $scope.isGeoIpDisabled = false;
+        }, function(reason) {
+            $scope.isGeoIpDisabled = true;
         });
     }
 
     function init() {
-        $scope.isInitialized = false;
         $scope.isSuccess = false;
         $scope.isError = false;
+        $scope.isGeoIpDisabled = true;
         getGeoIp();
     }
 

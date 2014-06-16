@@ -23,7 +23,7 @@
                     p.list-group-item-text {{ record.text }}
                     p(ng-show='(record.place_full_name)') Location: {{ record.place_full_name }}
     .col-lg-6
-        div(class=['panel', 'panel-default'], ng-controller='TwitterCreateCtrl', ng-show='isInitialized')
+        div(class=['panel', 'panel-default'], ng-controller='TwitterCreateCtrl')
             .panel-heading
                 h4.panel-title Tweet now
             .panel-body
@@ -35,10 +35,9 @@
                     .form-group
                         label(for='status') Compose new Tweet
                         textarea.form-control(id="status", rows="4", maxlength=140, cols=50, required, ng-model='status')
-                    .form-group
+                    .form-group(ng-hide='isGeoIpDisabled')
                         p Coordinates (lat: {{ geoIp.coords.latitude }}, long: {{ geoIp.coords.longitude }})
                     button(type="button", class=['btn', 'btn-primary'], ng-click='submit()', ng-disabled='form.$invalid || isSubmittingTweet') Submit
                     button(type="button", class=['btn', 'btn-default'], ng-click='reset()') Clear
-                br
-                google-map(class="google-map-container", center="map.center", zoom="map.zoom", events="map.events")
+                google-map(class="google-map-container", center="map.center", zoom="map.zoom", events="map.events", ng-hide='isGeoIpDisabled')
                     marker(coords="map.center")
