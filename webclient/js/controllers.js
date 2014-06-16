@@ -93,6 +93,10 @@ function TwitterCreateCtrl(geolocation, $upload, $scope, $http) {
     };
 
     $scope.map = {
+        center: {
+            latitude: 0,
+            longitude: 0
+        },
         zoom: 15,
         events: {
             center_changed: function() {
@@ -132,6 +136,7 @@ function TwitterCreateCtrl(geolocation, $upload, $scope, $http) {
         $scope.isSuccess = false;
         $scope.isError = false;
         $scope.isGeoIpDisabled = true;
+        $scope.getGeoIp();
     }
 
     init();
