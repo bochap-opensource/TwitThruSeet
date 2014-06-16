@@ -38,7 +38,6 @@
                     .form-group(ng-hide='isGeoIpDisabled')
                         p Coordinates (lat: {{ geoIp.coords.latitude }}, long: {{ geoIp.coords.longitude }})
                     button(type="button", class=['btn', 'btn-primary'], ng-click='submit()', ng-disabled='form.$invalid || isSubmittingTweet') Submit
-                    button(type="button", class=['btn', 'btn-primary'], ng-click='getGeoIp()') Get GeoIp
                     button(type="button", class=['btn', 'btn-default'], ng-click='reset()') Clear
                 div(ng-hide='isGeoIpDisabled')
                     google-map(class="google-map-container", center="map.center", zoom="map.zoom", events="map.events", pan="true", control="map.control")
