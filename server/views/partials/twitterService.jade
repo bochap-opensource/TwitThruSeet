@@ -41,5 +41,5 @@
                     button(type="button", class=['btn', 'btn-primary'], ng-click='getGeoIp()') Get GeoIp
                     button(type="button", class=['btn', 'btn-default'], ng-click='reset()') Clear
                 div(ng-hide='isGeoIpDisabled')
-                    google-map(class="google-map-container", center="map.center", zoom="map.zoom", events="map.events")
+                    google-map(class="google-map-container", center="map.center", zoom="map.zoom", events="map.events", refresh='isGeoIpDisabled', pan='true')
                         marker(coords="map.center")
