@@ -119,8 +119,9 @@ function TwitterCreateCtrl(geolocation, $upload, $scope, $http) {
             $scope.isGeoIpDisabled = false;
             $scope.map.center= {
                 latitude: data.coords.latitude,
-                    longitude: data.coords.longitude
+                longitude: data.coords.longitude
             };
+            $scope.map.refresh();
         }, function(reason) {
             $scope.isGeoIpDisabled = true;
         });
