@@ -127,7 +127,6 @@ function TwitterCreateCtrl(geolocation, $upload, $scope, $http) {
         $scope.isSuccess = false;
         $scope.isError = false;
         $scope.isGeoIpDisabled = true;
-        getGeoIp();
     }
 
     init();
