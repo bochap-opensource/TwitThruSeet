@@ -93,21 +93,29 @@ function TwitterCreateCtrl(geolocation, $upload, $scope, $http) {
     };
 
     $scope.map = {
-        control: {},
+        control:{},
         center: {
             latitude: 0,
             longitude: 0
         },
+        options: {
+            streetViewControl: false,
+            panControl: false,
+            maxZoom: 20,
+            minZoom: 3
+        },
+        bounds: {},
         zoom: 15,
         events: {
             tilesloaded: function (map) {
                 $scope.$apply(function () {
                     $scope.mapInstance = map;
                 });
+            },
+            center_changed: function() {
+                $scope.map.control.refresh($scope.map.center);
             }
-        },
-        markClick: false,
-        fit: true
+        }
     };
 
     function setSubmittingState(isSubmit) {
@@ -118,9 +126,8 @@ function TwitterCreateCtrl(geolocation, $upload, $scope, $http) {
         geolocation.getLocation().then(function(data){
             $scope.isGeoIpDisabled = false;
             $scope.geoIp = data;
-            $scope.map.center.latitude = $scope.geoIp.coords.latitude;
-            $scope.map.center.longitude = $scope.geoIp.coords.longitude;
-            $scope.map.refresh();
+            $scope.map.center.latitude = data.coords.latitude;
+            $scope.map.center.longitude = data.coords.longitude;
         }, function(reason) {
             $scope.isGeoIpDisabled = true;
         });
@@ -130,7 +137,6 @@ function TwitterCreateCtrl(geolocation, $upload, $scope, $http) {
         $scope.isSuccess = false;
         $scope.isError = false;
         $scope.isGeoIpDisabled = true;
-        $scope.getGeoIp();
     }
 
     init();
