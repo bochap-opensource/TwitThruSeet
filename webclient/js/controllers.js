@@ -73,8 +73,8 @@ function TwitterCreateCtrl(geolocation, $upload, $scope, $http) {
             url: '/api/twitter/update',
             data: {
                 status: $scope.status,
-                latitude: $scope.geoIp.coords.latitude,
-                longitude: $scope.geoIp.coords.longitude
+                latitude: ($scope.geoIp.coords ? $scope.geoIp.coords.latitude : null),
+                longitude: ($scope.geoIp.coords.longitude ? $scope.geoIp.coords.longitude : null)
             },
             file: $scope.file
         }).progress(function(event) {
