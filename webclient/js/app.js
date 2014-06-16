@@ -1,7 +1,7 @@
 'use strict';
 
 angular.isUndefinedOrNull = function(val) {
-    return angular.isUndefined(val) || val === null
+    return angular.isUndefined(val) || val === null || !(strValue);
 }
 
 // Declare app level module which depends on filters, and services

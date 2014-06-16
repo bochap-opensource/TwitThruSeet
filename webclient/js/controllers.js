@@ -3,26 +3,20 @@
 /* Controllers */
 
 /*function AppCtrl($scope, $http) {
-  $http({method: 'GET', url: '/api/name'}).
-  success(function(data, status, headers, config) {
-    $scope.name = data.name;
-  }).
-  error(function(data, status, headers, config) {
-    $scope.name = 'Error!'
-  });
-}*/
+ $http({method: 'GET', url: '/api/name'}).
+ success(function(data, status, headers, config) {
+ $scope.name = data.name;
+ }).
+ error(function(data, status, headers, config) {
+ $scope.name = 'Error!'
+ });
+ }*/
 function EmptyCtrl() {
 
 }
 EmptyCtrl.$inject = [];
 
 function TwitterTimelineCtrl($sce, $scope, $http) {
-    $scope.getNewTweets = function() {
-        loadTweets(null, $scope.data.since_id);
-    };
-    $scope.getOlderTweets = function() {
-        loadTweets($scope.data.max_id, null);
-    };
     $scope.trustHtml = function(src) {
         return $sce.trustAsHtml(src);
     };
@@ -31,15 +25,13 @@ function TwitterTimelineCtrl($sce, $scope, $http) {
         $scope.isLoadingTweets = isLoad;
     }
 
-    function loadTweets(max_id, since_id) {
+    $scope.loadTweets = function() {
         $scope.last_refresh = new Date();
         setLoadingState(true);
-        $http.get('/api/twitter/timeline',{params: {max_id: max_id, since_id: since_id}})
+        $http.get('/api/twitter/timeline',{params: { count: $scope.count}})
             .then(function(response){
+                $scope.data = response.data;
                 $scope.isInitialized = true;
-                // success
-                if(since_id == null || response.data.length > 0)
-                    $scope.data = response.data;
             }, function(error){
                 // error
             }).then(function(response) {
@@ -50,10 +42,10 @@ function TwitterTimelineCtrl($sce, $scope, $http) {
 
     function init() {
         $scope.isInitialized = false;
-        $scope.data = {};
+        $scope.count = 10;
         setLoadingState(false);
         // Load data when controller is first created
-        loadTweets();
+        $scope.loadTweets();
     }
 
     init();
@@ -82,8 +74,8 @@ function TwitterCreateCtrl(geolocation, $upload, $scope, $http) {
             url: '/api/twitter/update',
             data: {
                 status: $scope.status,
-                latitude: $scope.geoIp.coords.latitude,
-                longitude: $scope.geoIp.coords.longitude
+                latitude: ($scope.geoIp ? $scope.geoIp.coords.latitude : null),
+                longitude: ($scope.geoIp ? $scope.geoIp.coords.longitude : null)
             },
             file: $scope.file
         }).progress(function(event) {
@@ -101,20 +93,30 @@ function TwitterCreateCtrl(geolocation, $upload, $scope, $http) {
     };
 
     $scope.map = {
+        control:{},
         center: {
             latitude: 0,
             longitude: 0
         },
+        options: {
+            streetViewControl: false,
+            panControl: false,
+            maxZoom: 20,
+            minZoom: 3
+        },
+        bounds: {},
         zoom: 15,
         events: {
             tilesloaded: function (map) {
                 $scope.$apply(function () {
                     $scope.mapInstance = map;
                 });
+            },
+            center_changed: function() {
+                $scope.map.control.refresh($scope.map.center);
             }
-        },
-        markClick: false,
-        fit: true};
+        }
+    };
 
     function setSubmittingState(isSubmit) {
         $scope.isSubmittingTweet = isSubmit;
@@ -122,17 +124,19 @@ function TwitterCreateCtrl(geolocation, $upload, $scope, $http) {
 
     function getGeoIp() {
         geolocation.getLocation().then(function(data){
+            $scope.isGeoIpDisabled = false;
             $scope.geoIp = data;
             $scope.map.center.latitude = data.coords.latitude;
             $scope.map.center.longitude = data.coords.longitude;
-            $scope.isInitialized = true;
+        }, function(reason) {
+            $scope.isGeoIpDisabled = true;
         });
     }
 
     function init() {
-        $scope.isInitialized = false;
         $scope.isSuccess = false;
         $scope.isError = false;
+        $scope.isGeoIpDisabled = true;
         getGeoIp();
     }
 

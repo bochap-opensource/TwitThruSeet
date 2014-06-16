@@ -33,6 +33,5 @@
   },
   "_source": "git://github.com/arunisrael/angularjs-geolocation.git",
   "_target": "~0.1.1",
-  "_originalSource": "angularjs-geolocation",
-  "_direct": true
+  "_originalSource": "angularjs-geolocation"
 }

@@ -5,37 +5,40 @@
     .col-lg-6
         div(class=['panel', 'panel-default'], ng-controller='TwitterTimelineCtrl', ng-show='isInitialized')
             .panel-heading
-                h4.panel-title Timeline as of {{ last_refresh.toLocaleString() }} [Total: {{ data.result.length }} post(s)]
+                h4.panel-title Timeline as of {{ last_refresh.toLocaleString() }}
             .panel-body
                 .btn-toolbar
                     .btn-group
-                        a(class=['btn btn-primary btn-md'], ng-click='getNewTweets()', ng-disabled='isLoadingTweets') Get New Tweet
-                        a(class=['btn btn-primary btn-md'], ng-click='getOlderTweets()', ng-disabled='isLoadingTweets') Get Older Tweet
+                        a(class=['btn btn-primary btn-md'], ng-click='loadTweets()', ng-disabled='isLoadingTweets') Refresh
+                .form-group
+                    label(for='numOfTweets') Number of Tweets to load:
+                    input(type="number", id="numOfTweets", min="5", max="50", ng-model="count" , ng-change='loadTweets()')
             ul.list-group
-                li.list-group-item(ng-repeat="record in data.result")
+                li.list-group-item(ng-repeat="record in data")
                     span.badge
                         img.img-thumbnail(ng-src='{{ record.user_profile_image_url }}', alt='{{ record.user_name }}')
                     h4.list-group-item-heading {{ record.user_screen_name }}
                     p
                         small {{ record.created_at }}
                     p.list-group-item-text {{ record.text }}
+                    p(ng-show='(record.place_full_name)') Location: {{ record.place_full_name }}
     .col-lg-6
-        div(class=['panel', 'panel-default'], ng-controller='TwitterCreateCtrl', ng-show='isInitialized')
+        div(class=['panel', 'panel-default'], ng-controller='TwitterCreateCtrl')
             .panel-heading
                 h4.panel-title Tweet now
             .panel-body
                 div(ng-show='isSuccess', class=['alert', 'alert-success'])
-                    | Tweet has been posted successfully
+                    | Tweet has been posted successfully. Click on the Refresh button to see the tweet.
                 div(ng-show='isError', class=['alert', 'alert-danger'])
                     | Error: {{ resultMessage }}
                 form(name="form", role='form', novalidate)
                     .form-group
                         label(for='status') Compose new Tweet
                         textarea.form-control(id="status", rows="4", maxlength=140, cols=50, required, ng-model='status')
-                    .form-group
+                    .form-group(ng-hide='isGeoIpDisabled')
                         p Coordinates (lat: {{ geoIp.coords.latitude }}, long: {{ geoIp.coords.longitude }})
                     button(type="button", class=['btn', 'btn-primary'], ng-click='submit()', ng-disabled='form.$invalid || isSubmittingTweet') Submit
                     button(type="button", class=['btn', 'btn-default'], ng-click='reset()') Clear
-                br
-                google-map(class="google-map-container", center="map.center", zoom="map.zoom", events="map.events")
-                    marker(coords="map.center")
+                div(ng-hide='isGeoIpDisabled')
+                    google-map(class="google-map-container", center="map.center", zoom="map.zoom", events="map.events", pan="true", control="map.control")
+                        marker(coords="map.center")

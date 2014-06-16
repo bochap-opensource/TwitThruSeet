@@ -64,14 +64,14 @@ module.exports = function (app, passport) {
         if(req.body.latitude && isValidGeoCoord(req.body.latitude)) body.lat = utf8.encode(req.body.latitude);
         if(req.body.longitude && isValidGeoCoord(req.body.longitude)) body.long = utf8.encode(req.body.longitude);
 
-/*        if(req.files != undefined && req.files.file != undefined) {
-            uri = "update_with_media.json";
-            encoding = "multipart/form-data";
-            path = req.files.file.path;
-            body.media = [ fs.createReadStream(path)  ];
-        }*/
+        /*        if(req.files != undefined && req.files.file != undefined) {
+         uri = "update_with_media.json";
+         encoding = "multipart/form-data";
+         path = req.files.file.path;
+         body.media = [ fs.createReadStream(path)  ];
+         }*/
         passport._strategies.twitter._oauth.post(
-            'https://api.twitter.com/1.1/statuses/' + uri,
+                'https://api.twitter.com/1.1/statuses/' + uri,
             req.user.twitter_token,
             req.user.twitter_token_secret,
             body, encoding, function (err, data, response) {
@@ -118,9 +118,14 @@ module.exports = function (app, passport) {
     }
 
     function getTwitterTimeLine(req, callback) {
-        var uri = 'https://api.twitter.com/1.1/statuses/home_timeline.json?count=10';
-        if(req.query.since_id) uri += '&since_id=' + req.query.since_id;
-        if(req.query.max_id) uri += '&max_id=' + req.query.max_id;
+        var uri = 'https://api.twitter.com/1.1/statuses/home_timeline.json?count=';
+        if(req.query.count) {
+            uri += req.query.count;
+        } else {
+            uri += "10";
+        }
+
+        console.log(uri);
         passport._strategies.twitter._oauth._performSecureRequest(
             req.user.twitter_token,
             req.user.twitter_token_secret,
@@ -135,24 +140,21 @@ module.exports = function (app, passport) {
                     var jsonData = JSON.parse(data);
                     for (var i = 0; i < jsonData.length; i++) {
                         var record = jsonData[i];
+                        var place_full_name = null;
+                        if(record.place != undefined)
+                            place_full_name = record.place.full_name;
                         result.push({
                             id_str: record.id_str,
                             created_at: record.created_at,
                             text: record.text,
                             user_screen_name: record.user.screen_name,
                             user_name: record.user.name,
-                            user_profile_image_url: record.user.profile_image_url
+                            user_profile_image_url: record.user.profile_image_url,
+                            place_full_name: place_full_name
                         });
-                        if(i == 0) since_id = record.id_str;
-                        if(i == (jsonData.length - 1)) max_id = (bigInt(record.id_str) - 1).toString();
                     }
-                    processedData = {
-                        result: result,
-                        since_id: since_id,
-                        max_id: max_id
-                    };
                 }
-                callback(err, processedData, response);
+                callback(err, result, response);
             });
     }
 
